@@ -9,8 +9,15 @@ public class VisoesClienteServiceModel
         _context = context;
     }
 
-    public async Task<List<VisoesClienteModel>> GetClientesAsync()
+    public async Task<List<VisoesClienteModel>> GetClientesAsync(DateTime? startDate, DateTime? endDate)
     {
+        var defaultStartDate = DateTime.Now.AddDays(-365*5);
+        var defaultEndDate = DateTime.Now;
+
+        // Preenchendo as datas apenas se forem nulas 
+        startDate = startDate ?? defaultStartDate; 
+        endDate = endDate ?? defaultEndDate;
+
         var query = @"
             SELECT TOP (1000)
                 CLIENTE.ID_CLIENTE AS IdCliente,
@@ -29,10 +36,11 @@ public class VisoesClienteServiceModel
             JOIN [BancoC_DB].[dbo].[PAD_PESSOA] AS PESSOA_USU ON PF_USU.ID_PESSOA = PESSOA_USU.ID_PESSOA
             JOIN [BancoC_DB].[dbo].[PAD_CLIENTE_LIMITE] AS LIMITE ON CLIENTE.ID_CLIENTE = LIMITE.ID_CLIENTE
             JOIN [BancoC_DB].[dbo].[PAD_CATEGORIA_FINAN] AS CATEGORIA ON LIMITE.ID_CATEGORIA = CATEGORIA.ID_CATEGORIA_FINAN
-            JOIN [BancoC_DB].[dbo].[PAD_CLASSIFICACAO_FINAN] AS CLASSIFICACAO ON LIMITE.ID_CLASSIFICACAO = CLASSIFICACAO.ID_CLASSIFICACAO_FINAN";
+            JOIN [BancoC_DB].[dbo].[PAD_CLASSIFICACAO_FINAN] AS CLASSIFICACAO ON LIMITE.ID_CLASSIFICACAO = CLASSIFICACAO.ID_CLASSIFICACAO_FINAN
+            WHERE CLIENTE.DT_CLIENTE_DESDE BETWEEN {0} AND {1}";
 
         return await _context.Set<VisoesClienteModel>()
-            .FromSqlRaw(query)
+            .FromSqlRaw(query, startDate, endDate)
             .ToListAsync();
     }
 }

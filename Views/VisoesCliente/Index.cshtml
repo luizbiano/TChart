@@ -7,7 +7,22 @@
     <title>Clientes</title>
 </head>
 <body>
+
     <h1>Lista de Clientes</h1>
+
+    <form method="get" asp-action="Index"> 
+        <label for="startDate">Data Inicial:</label> 
+        <input type="date" id="startDate" name="startDate" /> 
+        <label for="endDate">Data Final:</label> 
+        <input type="date" id="endDate" name="endDate" /> <button type="submit">Buscar</button> 
+    </form>
+
+    <ejs-grid id="Grid" dataSource="@Model" allowPaging="true">
+        <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+    </ejs-grid>
+
+    <ejs-chart id="container"></ejs-chart>
+<!--
     <table>
         <thead>
             <tr>
@@ -39,5 +54,6 @@
             }
         </tbody>
     </table>
+-->
 </body>
 </html>

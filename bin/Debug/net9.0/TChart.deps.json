@@ -10,7 +10,8 @@
         "dependencies": {
           "EntityFramework": "6.5.1",
           "Microsoft.EntityFrameworkCore": "9.0.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.0"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.0",
+          "Syncfusion.EJ2.AspNet.Core": "28.1.36"
         },
         "runtime": {
           "TChart.dll": {}
@@ -364,6 +365,14 @@
           }
         }
       },
+      "Newtonsoft.Json/13.0.2": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.2.27524"
+          }
+        }
+      },
       "runtime.native.System.Data.SqlClient.sni/4.7.0": {
         "dependencies": {
           "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
@@ -395,6 +404,26 @@
             "rid": "win-x86",
             "assetType": "native",
             "fileVersion": "4.6.25512.1"
+          }
+        }
+      },
+      "Syncfusion.EJ2.AspNet.Core/28.1.36": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.2",
+          "Syncfusion.Licensing": "28.1.36"
+        },
+        "runtime": {
+          "lib/net9.0/Syncfusion.EJ2.dll": {
+            "assemblyVersion": "28.1.36.0",
+            "fileVersion": "28.1.36.0"
+          }
+        }
+      },
+      "Syncfusion.Licensing/28.1.36": {
+        "runtime": {
+          "lib/net9.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "28.1.36.0",
+            "fileVersion": "28.1.36.0"
           }
         }
       },
@@ -860,6 +889,13 @@
       "path": "microsoft.win32.systemevents/6.0.0",
       "hashPath": "microsoft.win32.systemevents.6.0.0.nupkg.sha512"
     },
+    "Newtonsoft.Json/13.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R2pZ3B0UjeyHShm9vG+Tu0EBb2lC8b0dFzV9gVn50ofHXh9Smjk6kTn7A/FdAsC8B5cKib1OnGYOXxRBz5XQDg==",
+      "path": "newtonsoft.json/13.0.2",
+      "hashPath": "newtonsoft.json.13.0.2.nupkg.sha512"
+    },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -887,6 +923,20 @@
       "sha512": "sha512-YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA==",
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "Syncfusion.EJ2.AspNet.Core/28.1.36": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1zvHrY5TZaQxDVUWGAusL7hYXDfivlHsM0rVG8Z+62XmxhM0P2o8d/jFfzfrE4FHRGo5RfiYAGXk91MBwdGriQ==",
+      "path": "syncfusion.ej2.aspnet.core/28.1.36",
+      "hashPath": "syncfusion.ej2.aspnet.core.28.1.36.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/28.1.36": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MmpXZdmJd07FUlQMiq7PYftNGK87JoDMkAve1I7roNiRBTHKlnin/vXAccEi1VcCFIHTPPCsRQkONrKWfR9HiA==",
+      "path": "syncfusion.licensing/28.1.36",
+      "hashPath": "syncfusion.licensing.28.1.36.nupkg.sha512"
     },
     "System.ClientModel/1.0.0": {
       "type": "package",
