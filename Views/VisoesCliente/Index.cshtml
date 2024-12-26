@@ -1,0 +1,43 @@
+@model IEnumerable<TChart.Models.VisoesClienteModel>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Clientes</title>
+</head>
+<body>
+    <h1>Lista de Clientes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Cliente</th>
+                <th>Nome/Razão Social</th>
+                <th>Apelido/Nome Fantasia</th>
+                <th>Cliente Desde</th>
+                <th>Categoria Financeira</th>
+                <th>Cod Classificação Financeira</th>
+                <th>Des Classificação Financeira</th>
+                <th>Valor Limite</th>
+                <th>Nome Responsável</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.IdCliente</td>
+                    <td>@cliente.NomeRazaoSocial</td>
+                    <td>@cliente.ApelidoNomeFantasia</td>
+                    <td>@cliente.DtClienteDesde.ToString("dd/MM/yyyy")</td>
+                    <td>@cliente.CategoriaFinan</td>
+                    <td>@cliente.TpClassificacaoFinan</td>
+                    <td>@cliente.DsClassificacaoFinan</td>                    
+                    <td>@cliente.VlLimite</td>
+                    <td>@cliente.NomeResponsavel</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
