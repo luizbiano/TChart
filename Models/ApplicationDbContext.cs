@@ -9,9 +9,9 @@ public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : ba
 // Defina suas DbSets aqui, por exemplo: 
 public DbSet<ClienteModel> Clientes { get; set; }
 public DbSet<CategoriaClienteModel> CategoriaCliente { get; set; }
-
 public DbSet<ResponsavelClienteModel> ResponsavelCliente { get; set; }
 public DbSet<ClientePeriodoModel> ClientesPeriodo { get; set; }
+public DbSet<ContratoModel> Contratos { get; set; }
 
 protected override void OnModelCreating(ModelBuilder modelBuilder) 
 { 
@@ -19,6 +19,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     modelBuilder.Entity<CategoriaClienteModel>().HasNoKey();
     modelBuilder.Entity<ClientePeriodoModel>().HasNoKey();
     modelBuilder.Entity<ResponsavelClienteModel>().HasNoKey();
+    modelBuilder.Entity<ContratoModel>().HasNoKey();
 }
 
 }

@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 // Configure the DbContext with SQL Server 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); 
 builder.Services.AddScoped<VisoesClienteServiceModel>();
+builder.Services.AddScoped<VisoesContratoServiceModel>();
 
 var app = builder.Build();
 

@@ -1,0 +1,64 @@
+@using TChart.Models.Charts
+@model TChart.Models.VisoesContratoViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Contratos</title>
+</head>
+<body>
+    @{
+        var palette = new string[] { "#6B818C", "#FF5964", "#2C363F"};
+    }
+    <form method="get" asp-action="Index" style="margin-bottom: 10px"> 
+        <label for="startDate">Data Inicial:</label> 
+        <input type="date" id="startDate" name="startDate" /> 
+        <label for="endDate">Data Final:</label> 
+        <input type="date" id="endDate" name="endDate" /> <button type="submit">Buscar</button> 
+    </form>
+    <ejs-grid id="GridCliente" dataSource="@Model.Contratos" allowPaging="true">
+        <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+    </ejs-grid>
+
+<h1>Lista de Contratos</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID Contrato</th>
+            <th>Cliente</th>               
+            <th>Data Contrato</th>
+            <th>Valor Contrato</th>
+            <th>Juros Original</th>
+            <th>Juros Atual</th>
+            <th>Dia Vencimento</Dialog></th>
+            <th>Tipo Operacao</th>
+            <th>Status</th>
+            <th>Capital</th>
+            <th>Responsavel</th>
+                     
+        </tr>
+    </thead>
+    <tbody>     
+        @foreach (var contrato in Model.Contratos)
+        {
+            <tr>
+                <td>@contrato.IdContrato</td>
+                <td>@contrato.Cliente</td>                
+                <td>@contrato.DtContrato.ToString("dd/MM/yyyy")</td>
+                <td>@contrato.ValorEmprestimo</td>
+                <td>@contrato.JurosOriginal</td>
+                <td>@contrato.JurosAtual</td>
+                <td>@contrato.DiaVencimento</td>
+                <td>@contrato.TipoOperacao</td>
+                <td>@contrato.StatusContrato</td>
+                <td>@contrato.Capital</td>
+                <td>@contrato.Responsavel</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+</body>
+</html>

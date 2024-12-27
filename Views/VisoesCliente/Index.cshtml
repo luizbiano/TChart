@@ -183,7 +183,7 @@
                     <td>@cliente.CategoriaFinan</td>
                     <td>@cliente.TpClassificacaoFinan</td>
                     <td>@cliente.DsClassificacaoFinan</td>                    
-                    <td>@cliente.VlLimite</td>
+                    <td>@cliente.VlLimite.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
                     <td>@cliente.NomeResponsavel</td>
                 </tr>
             }
