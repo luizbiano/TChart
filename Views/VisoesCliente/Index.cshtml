@@ -1,3 +1,4 @@
+@using TChart.Models.Charts
 @model TChart.Models.VisoesClienteViewModel
 
 <!DOCTYPE html>
@@ -8,20 +9,48 @@
 </head>
 <body>
 
-    <h1>Lista de Clientes</h1>
-
+    <h1 style="text-align: center;">Lista de Clientes</h1>
+    <br> <!-- Quebra de linha -->
     <form method="get" asp-action="Index"> 
         <label for="startDate">Data Inicial:</label> 
         <input type="date" id="startDate" name="startDate" /> 
         <label for="endDate">Data Final:</label> 
         <input type="date" id="endDate" name="endDate" /> <button type="submit">Buscar</button> 
     </form>
-
-    <ejs-grid id="Grid" dataSource="@Model.Clientes" allowPaging="true">
+    <br> <!-- Quebra de linha -->
+    <ejs-grid id="GridCliente" dataSource="@Model.Clientes" allowPaging="true">
         <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
     </ejs-grid>
 
-    <ejs-chart id="container"></ejs-chart>
+    @{
+        List<PieChartData> chartData = new List<PieChartData>();
+
+        foreach (var item in Model.CategoriaCliente)
+        {
+            chartData.Add(new PieChartData { xValue = item.CategoriaFinan, yValue = item.Quantidade });
+        }
+    }
+
+    <h1 style="text-align: center;">Clientes Categoria Financeira</h1>
+    <br> <!-- Quebra de linha -->
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div style="flex: 1; margin-left: 10px;">
+            <ejs-accumulationchart id="container">
+                <e-accumulationchart-legendsettings visible="false">
+                </e-accumulationchart-legendsettings>
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@chartData" xName="xValue" yName="yValue" name="Browser">
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+            </ejs-accumulationchart>
+        </div>
+
+        <div style="flex: 1; margin-right: 10px;">
+            <ejs-grid id="GridCategoria" dataSource="@Model.CategoriaCliente" allowPaging="true">
+                <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+            </ejs-grid>
+        </div>
+    </div>
 
     <h1>Contagem de Clientes por Categoria Financeira</h1>
     <table>
