@@ -1,4 +1,4 @@
-@model IEnumerable<TChart.Models.VisoesClienteModel>
+@model TChart.Models.VisoesClienteViewModel
 
 <!DOCTYPE html>
 <html>
@@ -17,12 +17,32 @@
         <input type="date" id="endDate" name="endDate" /> <button type="submit">Buscar</button> 
     </form>
 
-    <ejs-grid id="Grid" dataSource="@Model" allowPaging="true">
+    <ejs-grid id="Grid" dataSource="@Model.Clientes" allowPaging="true">
         <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
     </ejs-grid>
 
     <ejs-chart id="container"></ejs-chart>
-<!--
+
+    <h1>Contagem de Clientes por Categoria Financeira</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Categoria Financeira</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CategoriaCliente)
+            {
+                <tr>
+                    <td>@item.CategoriaFinan</td>
+                    <td>@item.Quantidade</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h1>Lista de Clientes</h1>
     <table>
         <thead>
             <tr>
@@ -38,7 +58,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var cliente in Model)
+            @foreach (var cliente in Model.Clientes)
             {
                 <tr>
                     <td>@cliente.IdCliente</td>
@@ -54,6 +74,5 @@
             }
         </tbody>
     </table>
--->
 </body>
 </html>

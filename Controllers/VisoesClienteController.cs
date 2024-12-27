@@ -15,8 +15,15 @@ namespace TChart.Controllers
 
         public async Task<IActionResult> Index(DateTime? startDate, DateTime? endDate)
         {
-            var clientes = await _clienteServiceModel.GetClientesAsync(startDate, endDate);
-            return View(clientes);
-        }
+            var viewModel = new VisoesClienteViewModel 
+            { 
+                Clientes = await _clienteServiceModel.GetClientesAsync(startDate, endDate), 
+                CategoriaCliente = await _clienteServiceModel.GetCategoriaFinanCountsAsync(startDate, endDate) 
+            };
+            
+            //var clientes = await _clienteServiceModel.GetClientesAsync(startDate, endDate);
+            //return View(clientes);
+            return View(viewModel);
+        }     
     }
 }

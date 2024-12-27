@@ -9,7 +9,7 @@ public class VisoesClienteServiceModel
         _context = context;
     }
 
-    public async Task<List<VisoesClienteModel>> GetClientesAsync(DateTime? startDate, DateTime? endDate)
+    public async Task<List<ClienteModel>> GetClientesAsync(DateTime? startDate, DateTime? endDate)
     {
         var defaultStartDate = DateTime.Now.AddDays(-365*5);
         var defaultEndDate = DateTime.Now;
@@ -39,9 +39,34 @@ public class VisoesClienteServiceModel
             JOIN [BancoC_DB].[dbo].[PAD_CLASSIFICACAO_FINAN] AS CLASSIFICACAO ON LIMITE.ID_CLASSIFICACAO = CLASSIFICACAO.ID_CLASSIFICACAO_FINAN
             WHERE CLIENTE.DT_CLIENTE_DESDE BETWEEN {0} AND {1}";
 
-        return await _context.Set<VisoesClienteModel>()
+        return await _context.Set<ClienteModel>()
             .FromSqlRaw(query, startDate, endDate)
             .ToListAsync();
     }
+
+    public async Task<List<CategoriaClienteModel>> GetCategoriaFinanCountsAsync(DateTime? startDate, DateTime? endDate)
+    {
+        var defaultStartDate = DateTime.Now.AddDays(-365*5);
+        var defaultEndDate = DateTime.Now;
+
+        // Preenchendo as datas apenas se forem nulas 
+        startDate = startDate ?? defaultStartDate; 
+        endDate = endDate ?? defaultEndDate;
+
+        var query = @"
+            SELECT 
+                CATEGORIA.DS_CATEGORIA_FINAN AS CategoriaFinan,
+                COUNT(*) AS Quantidade
+            FROM [BancoC_DB].[dbo].[PAD_CLIENTE] AS CLIENTE
+            JOIN [BancoC_DB].[dbo].[PAD_CLIENTE_LIMITE] AS LIMITE ON CLIENTE.ID_CLIENTE = LIMITE.ID_CLIENTE
+            JOIN [BancoC_DB].[dbo].[PAD_CATEGORIA_FINAN] AS CATEGORIA ON LIMITE.ID_CATEGORIA = CATEGORIA.ID_CATEGORIA_FINAN
+            WHERE CLIENTE.DT_CLIENTE_DESDE BETWEEN {0} AND {1}
+            GROUP BY CATEGORIA.DS_CATEGORIA_FINAN";
+
+        return await _context.Set<CategoriaClienteModel>()
+            .FromSqlRaw(query, startDate, endDate)
+            .ToListAsync();
+    }
+
 }
 

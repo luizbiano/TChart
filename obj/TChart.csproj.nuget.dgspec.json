@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projetos Locais\\TChart\\TChart\\TChart.csproj": {}
+    "c:\\Projetos Locais\\TChart\\TChart\\TChart.csproj": {}
   },
   "projects": {
-    "C:\\Projetos Locais\\TChart\\TChart\\TChart.csproj": {
+    "c:\\Projetos Locais\\TChart\\TChart\\TChart.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projetos Locais\\TChart\\TChart\\TChart.csproj",
+        "projectUniqueName": "c:\\Projetos Locais\\TChart\\TChart\\TChart.csproj",
         "projectName": "TChart",
-        "projectPath": "C:\\Projetos Locais\\TChart\\TChart\\TChart.csproj",
+        "projectPath": "c:\\Projetos Locais\\TChart\\TChart\\TChart.csproj",
         "packagesPath": "C:\\Users\\luizbiano\\.nuget\\packages\\",
-        "outputPath": "C:\\Projetos Locais\\TChart\\TChart\\obj\\",
+        "outputPath": "c:\\Projetos Locais\\TChart\\TChart\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\luizbiano\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TChart")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d35326c7e68cc2500dc898ca4076cc2a2a855750")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+605d02d5f0827dc177c8f0b81c79d6b8dd47cff5")]
 [assembly: System.Reflection.AssemblyProductAttribute("TChart")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TChart")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

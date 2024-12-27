@@ -1,6 +1,6 @@
 namespace TChart.Models;
 
-public class VisoesClienteModel 
+public class ClienteModel 
 { 
     public int IdCliente { get; set; } 
     public string NomeRazaoSocial { get; set; } 
