@@ -19,7 +19,8 @@ namespace TChart.Controllers
             { 
                 Clientes = await _clienteServiceModel.GetClientesAsync(startDate, endDate), 
                 CategoriaCliente = await _clienteServiceModel.GetCategoriaFinanCountsAsync(startDate, endDate),
-                ClientesPeriodo = await _clienteServiceModel.GetClientePeriodoCountsAsync(startDate, endDate)
+                ClientesPeriodo = await _clienteServiceModel.GetClientePeriodoCountsAsync(startDate, endDate),
+                ResponsavelCliente = await _clienteServiceModel.GetResponsaveClienteCountsAsync(startDate, endDate)
             };
             
             //var clientes = await _clienteServiceModel.GetClientesAsync(startDate, endDate);

@@ -92,6 +92,32 @@ public class VisoesClienteServiceModel
             .ToListAsync();
     }
 
+    public async Task<List<ResponsavelClienteModel>> GetResponsaveClienteCountsAsync(DateTime? startDate, DateTime? endDate)
+    {
+        var defaultStartDate = DateTime.Now.AddDays(-365*5);
+        var defaultEndDate = DateTime.Now;
+
+        // Preenchendo as datas apenas se forem nulas 
+        startDate = startDate ?? defaultStartDate; 
+        endDate = endDate ?? defaultEndDate;
+
+        var query = @"
+            SELECT 
+                PESSOA_USU.DS_NOME_RAZAO_SOCIAL AS Responsavel,
+				COUNT(*) AS QUANTIDADE
+            FROM [BancoC_DB].[dbo].[PAD_CLIENTE] AS CLIENTE
+            JOIN [BancoC_DB].[dbo].[PAD_PESSOA] AS PESSOA ON CLIENTE.ID_PESSOA = PESSOA.ID_PESSOA
+            JOIN [BancoC_DB].[dbo].[ACE_USUARIO] AS USUARIO ON CLIENTE.ID_USUARIO_RESPONSAVEL = USUARIO.ID_USUARIO
+            JOIN [BancoC_DB].[dbo].[PAD_PESSOA_FISICA] AS PF_USU ON USUARIO.ID_PESSOA_FISICA = PF_USU.ID_PESSOA_FISICA
+            JOIN [BancoC_DB].[dbo].[PAD_PESSOA] AS PESSOA_USU ON PF_USU.ID_PESSOA = PESSOA_USU.ID_PESSOA
+            WHERE CLIENTE.DT_CLIENTE_DESDE BETWEEN DATEADD(DAY, -365, GETDATE()) AND GETDATE()
+			GROUP BY PESSOA_USU.DS_NOME_RAZAO_SOCIAL
+			ORDER BY COUNT(*) DESC";
+
+        return await _context.Set<ResponsavelClienteModel>()
+            .FromSqlRaw(query, startDate, endDate)
+            .ToListAsync();
+    }
 
 }
 

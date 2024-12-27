@@ -8,39 +8,27 @@
     <title>Clientes</title>
 </head>
 <body>
-
-    <h1 style="text-align: center;">Lista de Clientes</h1>
-    <br> <!-- Quebra de linha -->
-    <form method="get" asp-action="Index"> 
+    @{
+        var palette = new string[] { "#6B818C", "#FF5964", "#2C363F"};
+    }
+    <form method="get" asp-action="Index" style="margin-bottom: 10px"> 
         <label for="startDate">Data Inicial:</label> 
         <input type="date" id="startDate" name="startDate" /> 
         <label for="endDate">Data Final:</label> 
         <input type="date" id="endDate" name="endDate" /> <button type="submit">Buscar</button> 
     </form>
-    <br> <!-- Quebra de linha -->
-    <ejs-grid id="GridCliente" dataSource="@Model.Clientes" allowPaging="true">
-        <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
-    </ejs-grid>
-
     @{
-        var palette = new string[] { "#6B818C", "#FF5964", "#2C363F"};
-        List<PieChartData> chartData = new List<PieChartData>();
-        List<AxisLabelData> axisLabelData = new List<AxisLabelData>();
-
-        foreach (var item in Model.CategoriaCliente)
-        {
-            chartData.Add(new PieChartData { xValue = item.CategoriaFinan, yValue = item.Quantidade });
-        }
-
+        List<AxisLabelData> clientesPeriodo = new List<AxisLabelData>();
         foreach (var periodo in Model.ClientesPeriodo)
         {
-            axisLabelData.Add(new AxisLabelData { x = periodo.Periodo, y = periodo.Quantidade });
+            clientesPeriodo.Add(new AxisLabelData { x = periodo.Periodo, y = periodo.Quantidade });
         }
-        ViewBag.dataSource = axisLabelData;
+        ViewBag.dataSource = clientesPeriodo;
     }
+    <h1 style="text-align: center;">Clientes</h1>
     <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100vh;">
     <div style="flex: 1; margin-left: 10px; margin-right: 10px;">
-    <ejs-chart id="container2" width="100%" palettes="palette">
+    <ejs-chart id="containerCliente" width="100%" palettes="palette">
     <e-chart-primaryxaxis valueType="Category"></e-chart-primaryxaxis>
     <e-series-collection>
         <e-series dataSource="ViewBag.dataSource" xName="x" yName="y"
@@ -53,29 +41,82 @@
     </ejs-chart>
     </div>
     </div>
-    
-    <h1 style="text-align: center;">Clientes Categoria Financeira</h1>
-    <br> <!-- Quebra de linha -->
+    <ejs-grid id="GridCliente" dataSource="@Model.Clientes" allowPaging="true">
+        <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+    </ejs-grid>
+	@{
+        List<PieChartData> pieChartCategoria = new List<PieChartData>();
+        foreach (var item in Model.CategoriaCliente)
+        {
+            pieChartCategoria.Add(new PieChartData { xValue = item.CategoriaFinan, yValue = item.Quantidade });
+        }
+    }
+    <h1 style="text-align: center;">Categoria Financeira</h1>
     <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
         <div style="flex: 1; margin-left: 10px;">
-            <ejs-accumulationchart id="container">
+            <ejs-accumulationchart id="containerCategoria">
                 <e-accumulationchart-legendsettings visible="true" position="Bottom">
                 </e-accumulationchart-legendsettings>
                 <e-accumulation-series-collection>
-                    <e-accumulation-series dataSource="@chartData" xName="xValue" yName="yValue" name="Browser" palettes="palette">
+                    <e-accumulation-series dataSource="@pieChartCategoria" xName="xValue" yName="yValue" name="Browser" palettes="palette">
                         <e-accumulationseries-datalabel name="text" visible="true">
                         </e-accumulationseries-datalabel>                    
                     </e-accumulation-series>
                 </e-accumulation-series-collection>
             </ejs-accumulationchart>
         </div>
-
         <div style="flex: 1; margin-right: 10px;">
             <ejs-grid id="GridCategoria" dataSource="@Model.CategoriaCliente" allowPaging="true">
                 <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
             </ejs-grid>
         </div>
     </div>
+    @{
+        List<PieChartData> pieChartResponsavel = new List<PieChartData>();
+        foreach (var item in Model.ResponsavelCliente)
+        {
+            pieChartResponsavel.Add(new PieChartData { xValue = item.Responsavel, yValue = item.Quantidade });
+        }
+    }
+    <h1 style="text-align: center;">Responsável</h1>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div style="flex: 1; margin-left: 10px;">
+            <ejs-accumulationchart id="containerResponsavel">
+                <e-accumulationchart-legendsettings visible="true" position="Bottom">
+                </e-accumulationchart-legendsettings>
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@pieChartResponsavel" xName="xValue" yName="yValue" name="Responsável" palettes="palette">
+                        <e-accumulationseries-datalabel name="text" visible="true">
+                        </e-accumulationseries-datalabel>                    
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+            </ejs-accumulationchart>
+        </div>
+        <div style="flex: 1; margin-right: 10px;">
+            <ejs-grid id="GridResponsavel" dataSource="@Model.ResponsavelCliente" allowPaging="true">
+                <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+            </ejs-grid>
+        </div>
+    </div>
+
+    <h1>Contagem de Clientes por Responsável</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Responsável</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var responsavel in Model.ResponsavelCliente)
+            {
+                <tr>
+                    <td>@responsavel.Responsavel</td>
+                    <td>@responsavel.Quantidade</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
     <h1>Contagem de Clientes por Periodo</h1>
     <table>
