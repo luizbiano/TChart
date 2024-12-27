@@ -23,23 +23,48 @@
     </ejs-grid>
 
     @{
+        var palette = new string[] { "#6B818C", "#FF5964", "#2C363F"};
         List<PieChartData> chartData = new List<PieChartData>();
+        List<AxisLabelData> axisLabelData = new List<AxisLabelData>();
 
         foreach (var item in Model.CategoriaCliente)
         {
             chartData.Add(new PieChartData { xValue = item.CategoriaFinan, yValue = item.Quantidade });
         }
-    }
 
+        foreach (var periodo in Model.ClientesPeriodo)
+        {
+            axisLabelData.Add(new AxisLabelData { x = periodo.Periodo, y = periodo.Quantidade });
+        }
+        ViewBag.dataSource = axisLabelData;
+    }
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100vh;">
+    <div style="flex: 1; margin-left: 10px; margin-right: 10px;">
+    <ejs-chart id="container2" width="100%" palettes="palette">
+    <e-chart-primaryxaxis valueType="Category"></e-chart-primaryxaxis>
+    <e-series-collection>
+        <e-series dataSource="ViewBag.dataSource" xName="x" yName="y"
+            type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" fill="#FF5964">
+            <e-series-marker>
+                 <e-series-datalabel visible="true"></e-series-datalabel>
+             </e-series-marker>
+        </e-series>
+    </e-series-collection>
+    </ejs-chart>
+    </div>
+    </div>
+    
     <h1 style="text-align: center;">Clientes Categoria Financeira</h1>
     <br> <!-- Quebra de linha -->
     <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
         <div style="flex: 1; margin-left: 10px;">
             <ejs-accumulationchart id="container">
-                <e-accumulationchart-legendsettings visible="false">
+                <e-accumulationchart-legendsettings visible="true" position="Bottom">
                 </e-accumulationchart-legendsettings>
                 <e-accumulation-series-collection>
-                    <e-accumulation-series dataSource="@chartData" xName="xValue" yName="yValue" name="Browser">
+                    <e-accumulation-series dataSource="@chartData" xName="xValue" yName="yValue" name="Browser" palettes="palette">
+                        <e-accumulationseries-datalabel name="text" visible="true">
+                        </e-accumulationseries-datalabel>                    
                     </e-accumulation-series>
                 </e-accumulation-series-collection>
             </ejs-accumulationchart>
@@ -51,6 +76,26 @@
             </ejs-grid>
         </div>
     </div>
+
+    <h1>Contagem de Clientes por Periodo</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Periodo</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var periodo in Model.ClientesPeriodo)
+            {
+                <tr>
+                    <td>@periodo.Periodo</td>
+                    <td>@periodo.Quantidade</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 
     <h1>Contagem de Clientes por Categoria Financeira</h1>
     <table>

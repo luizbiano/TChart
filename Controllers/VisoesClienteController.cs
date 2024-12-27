@@ -18,7 +18,8 @@ namespace TChart.Controllers
             var viewModel = new VisoesClienteViewModel 
             { 
                 Clientes = await _clienteServiceModel.GetClientesAsync(startDate, endDate), 
-                CategoriaCliente = await _clienteServiceModel.GetCategoriaFinanCountsAsync(startDate, endDate) 
+                CategoriaCliente = await _clienteServiceModel.GetCategoriaFinanCountsAsync(startDate, endDate),
+                ClientesPeriodo = await _clienteServiceModel.GetClientePeriodoCountsAsync(startDate, endDate)
             };
             
             //var clientes = await _clienteServiceModel.GetClientesAsync(startDate, endDate);

@@ -61,12 +61,37 @@ public class VisoesClienteServiceModel
             JOIN [BancoC_DB].[dbo].[PAD_CLIENTE_LIMITE] AS LIMITE ON CLIENTE.ID_CLIENTE = LIMITE.ID_CLIENTE
             JOIN [BancoC_DB].[dbo].[PAD_CATEGORIA_FINAN] AS CATEGORIA ON LIMITE.ID_CATEGORIA = CATEGORIA.ID_CATEGORIA_FINAN
             WHERE CLIENTE.DT_CLIENTE_DESDE BETWEEN {0} AND {1}
-            GROUP BY CATEGORIA.DS_CATEGORIA_FINAN";
+            GROUP BY CATEGORIA.DS_CATEGORIA_FINAN
+            ORDER BY COUNT(*) DESC";
 
         return await _context.Set<CategoriaClienteModel>()
             .FromSqlRaw(query, startDate, endDate)
             .ToListAsync();
     }
+
+    public async Task<List<ClientePeriodoModel>> GetClientePeriodoCountsAsync(DateTime? startDate, DateTime? endDate)
+    {
+        var defaultStartDate = DateTime.Now.AddDays(-365*5);
+        var defaultEndDate = DateTime.Now;
+
+        // Preenchendo as datas apenas se forem nulas 
+        startDate = startDate ?? defaultStartDate; 
+        endDate = endDate ?? defaultEndDate;
+
+        var query = @"
+            SELECT 
+                FORMAT(CLIENTE.DT_CLIENTE_DESDE, 'MMM/yyyy', 'pt-BR') AS PERIODO,
+                COUNT(*) AS QUANTIDADE
+            FROM [BancoC_DB].[dbo].[PAD_CLIENTE] AS CLIENTE
+            WHERE CLIENTE.DT_CLIENTE_DESDE BETWEEN {0} AND {1}
+            GROUP BY FORMAT(CLIENTE.DT_CLIENTE_DESDE, 'MMM/yyyy', 'pt-BR'),YEAR(CLIENTE.DT_CLIENTE_DESDE),MONTH(CLIENTE.DT_CLIENTE_DESDE)
+            ORDER BY YEAR(CLIENTE.DT_CLIENTE_DESDE),MONTH(CLIENTE.DT_CLIENTE_DESDE)";
+
+        return await _context.Set<ClientePeriodoModel>()
+            .FromSqlRaw(query, startDate, endDate)
+            .ToListAsync();
+    }
+
 
 }
 
