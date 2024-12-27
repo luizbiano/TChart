@@ -17,7 +17,10 @@ public class VisoesContratoController : Controller
         {
             var viewModel = new VisoesContratoViewModel 
             { 
-                Contratos = await _contratoServiceModel.GetContratosAsync(startDate, endDate)
+                Contratos = await _contratoServiceModel.GetContratosAsync(startDate, endDate),
+                ContratosPeriodo = await _contratoServiceModel.GetContratoPeriodoCountsAsync(startDate, endDate),
+                CategoriaContrato = await _contratoServiceModel.GetCategoriaContratoCountsAsync(startDate, endDate),
+                ResponsavelContrato = await _contratoServiceModel.GetResponsaveContratoCountsAsync(startDate, endDate)
             };
             return View(viewModel);
         }     

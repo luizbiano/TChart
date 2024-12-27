@@ -17,9 +17,131 @@
         <label for="endDate">Data Final:</label> 
         <input type="date" id="endDate" name="endDate" /> <button type="submit">Buscar</button> 
     </form>
+
+    @{
+        List<AxisLabelData> contratosPeriodo = new List<AxisLabelData>();
+        foreach (var periodo in Model.ContratosPeriodo)
+        {
+            contratosPeriodo.Add(new AxisLabelData { x = periodo.Periodo, y = periodo.Quantidade });
+        }
+        ViewBag.dataSource = contratosPeriodo;
+    }
+
+    <h1 style="text-align: center;">Contratos</h1>
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100vh;">
+    <div style="flex: 1; margin-left: 10px; margin-right: 10px;">
+    <ejs-chart id="containerContratos" width="100%" palettes="palette">
+    <e-chart-primaryxaxis valueType="Category"></e-chart-primaryxaxis>
+    <e-series-collection>
+        <e-series dataSource="ViewBag.dataSource" xName="x" yName="y"
+            type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" fill="#FF5964">
+            <e-series-marker>
+                 <e-series-datalabel visible="true"></e-series-datalabel>
+             </e-series-marker>
+        </e-series>
+    </e-series-collection>
+    </ejs-chart>
+    </div>
+    </div>
+
     <ejs-grid id="GridCliente" dataSource="@Model.Contratos" allowPaging="true">
         <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
     </ejs-grid>
+
+	@{
+        List<PieChartData> pieChartCategoria = new List<PieChartData>();
+        foreach (var item in Model.CategoriaContrato)
+        {
+            pieChartCategoria.Add(new PieChartData { xValue = item.Categoria, yValue = item.Quantidade });
+        }
+    }
+    <h1 style="text-align: center;">Categoria Financeira</h1>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div style="flex: 1; margin-left: 10px;">
+            <ejs-accumulationchart id="containerCategoria">
+                <e-accumulationchart-legendsettings visible="true" position="Bottom">
+                </e-accumulationchart-legendsettings>
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@pieChartCategoria" xName="xValue" yName="yValue" name="Browser" palettes="palette">
+                        <e-accumulationseries-datalabel name="text" visible="true">
+                        </e-accumulationseries-datalabel>                    
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+            </ejs-accumulationchart>
+        </div>
+        <div style="flex: 1; margin-right: 10px;">
+            <ejs-grid id="GridCategoria" dataSource="@Model.CategoriaContrato" allowPaging="true">
+                <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+            </ejs-grid>
+        </div>
+    </div>
+
+    @{
+        List<PieChartData> pieChartResponsavel = new List<PieChartData>();
+        foreach (var item in Model.ResponsavelContrato)
+        {
+            pieChartResponsavel.Add(new PieChartData { xValue = item.Responsavel, yValue = item.Quantidade });
+        }
+    }
+    <h1 style="text-align: center;">Responsável</h1>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div style="flex: 1; margin-left: 10px;">
+            <ejs-accumulationchart id="containerResponsavel">
+                <e-accumulationchart-legendsettings visible="true" position="Bottom">
+                </e-accumulationchart-legendsettings>
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@pieChartResponsavel" xName="xValue" yName="yValue" name="Responsável" palettes="palette">
+                        <e-accumulationseries-datalabel name="text" visible="true">
+                        </e-accumulationseries-datalabel>                    
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+            </ejs-accumulationchart>
+        </div>
+        <div style="flex: 1; margin-right: 10px;">
+            <ejs-grid id="GridResponsavel" dataSource="@Model.ResponsavelContrato" allowPaging="true">
+                <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+            </ejs-grid>
+        </div>
+    </div>
+
+
+<h1>Responsavel Contratos</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Responsavel</th>
+            <th>Quantidade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var responsavel in Model.ResponsavelContrato)
+        {
+            <tr>
+                <td>@responsavel.Responsavel</td>
+                <td>@responsavel.Quantidade</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h1>Categoria de Contratos</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Categoria</th>
+            <th>Quantidade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var categoria in Model.CategoriaContrato)
+        {
+            <tr>
+                <td>@categoria.Categoria</td>
+                <td>@categoria.Quantidade</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <h1>Lista de Contratos</h1>
 <table>
@@ -54,11 +176,28 @@
                 <td>@contrato.StatusContrato</td>
                 <td>@contrato.Capital</td>
                 <td>@contrato.Responsavel</td>
-
             </tr>
         }
     </tbody>
 </table>
 
+<h1>Contratos por Período</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Período</th>
+            <th>Quantidade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var periodo in Model.ContratosPeriodo)
+        {
+            <tr>
+                <td>@periodo.Periodo</td>
+                <td>@periodo.Quantidade</td>
+            </tr>
+        }
+    </tbody>    
+</table>
 </body>
 </html>
